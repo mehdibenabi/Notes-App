@@ -1,0 +1,39 @@
+.profil-info-section{
+display: flex;
+align-items: center;
+margin-right: 25px;
+}
+.abr-name{
+background-color: grey;
+width: 50px;
+height: 50px;
+border-radius: 50%;
+display: flex;
+justify-content: center;
+align-items: center;
+color: white;
+font-weight: 700;
+margin-right: 10px;
+cursor: pointer;
+}
+.section-logout-name{
+display: flex;
+flex-direction: column;
+justify-content: center;
+}
+.profil-name{
+font-weight: 600;
+font-size: 15px;
+}
+.btn-profil-logout{
+font-size: 15px;
+cursor: pointer;
+border: none;
+background-color: none;
+text-decoration: underline;
+}
+.btn-profil-logout:hover{
+    color: blue;
+    transition: .5s;
+
+}

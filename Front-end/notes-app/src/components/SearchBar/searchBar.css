@@ -1,0 +1,40 @@
+.input-sec{
+    width: 30%;
+    display: flex;
+    align-items: center;
+    position: relative;
+    font-weight: 600;
+}
+.input-search-bar{
+width: 100%;
+height: 50px;
+border-radius: 10px;
+border: .5px solid grey;
+padding: 5px 20px;
+font-size: 15px;
+}
+.icon-search-bar{
+cursor: pointer;
+cursor: pointer;
+position: absolute;
+right: 45px;
+color: grey;
+width: 35px;
+height: 35px;
+}
+.icon-search-bar:hover{
+color: blue;
+transition: .5s;
+}
+.icon-search-bar-2{
+cursor: pointer;
+position: absolute;
+right: 15px;
+color: grey;
+width: 25px;
+height: 25px;
+}
+.icon-search-bar-2:hover{
+color: blue;
+transition: .5s;
+}

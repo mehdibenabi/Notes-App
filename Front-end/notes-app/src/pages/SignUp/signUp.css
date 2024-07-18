@@ -1,12 +1,12 @@
-.section-log{
+.section-sign{
 width: 100%;
 height: 100vh;
 display: flex;
 justify-content: center;
 align-items: center;
 }
-.login{
-width:20%;
+.sign{
+width:25%;
 height: auto;
 border: 1px solid rgb(255, 255, 255);
 display: flex;
@@ -17,12 +17,12 @@ border-radius: 20px;
 box-shadow: 0 4px 8px rgba(0, 0, 0, .5);
 padding: 30px 30px;
 }
-.login-title{
+.sign-title{
 font-size: 30px;
 font-weight: 600;
 text-align: center;
 }
-.inputMail{
+.inputMail-sign{
 width: 100%;
 height: 50px;
 border-radius: 8px;
@@ -32,7 +32,21 @@ font-size: 15px;
 font-weight: 500;
 margin-top: 15px;
 }
-.btn-login{
+.inputName-sign{
+    width: 100%;
+height: 50px;
+border-radius: 8px;
+border: .5px solid #858585;
+padding: 4px 25px;
+font-size: 15px;
+font-weight: 500;
+margin-top: 15px;
+}
+.sign form{
+width: 90%;
+
+}
+.btn-sign{
 width: 100%;
 height: 50px;
 border-radius: 8px;
@@ -45,27 +59,21 @@ cursor: pointer;
 font-size: 20px;   
 color: white; 
 }
-.btn-login:hover{
+.btn-sign:hover{
 background-color: #1924bd;
 transition: 1s;
 }
-.not-registred{
+.not-registred-sign{
 margin-top: 15px;
 display: flex;
 justify-content: space-between;
 width: 100%;
 }
-.link-create{
+.link-log-sign{
     color: black;
-    margin-left: 10px;
+    /* margin-left: 10px; */
 }
-.link-create:hover{
+.link-log-sign:hover{
     color: rgb(0, 47, 255);
     transition: .5s;
-}
-.erreur{
-    color: red;
-    font-style: 12px;
-    font-weight: 600;
-    margin-top: 15px;
 }

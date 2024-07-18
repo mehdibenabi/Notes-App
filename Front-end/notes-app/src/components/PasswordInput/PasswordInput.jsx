@@ -8,27 +8,29 @@ const PasswordInput = ({ onChange, value, placeholder }) => {
 
   return (
     <>
-      <input
-        type={isShowPass ? "text" : "password"}
-        onChange={onChange}
-        placeholder={placeholder || "Password"}
-        value={value}
-        className="inputPass"
-      />
+      <div className="all-input-pass">
+        <input
+          type={isShowPass ? "text" : "password"}
+          onChange={onChange}
+          placeholder={placeholder || "Password"}
+          value={value}
+          className="inputPass"
+        />
 
-      {isShowPass ? (
-        <FaRegEye
-          size={22}
-          className="eye"
-          onClick={() => setIsShowPass(!isShowPass)}
-        />
-      ) : (
-        <FaRegEyeSlash
-          size={22}
-          className="eye-slash"
-          onClick={() => setIsShowPass(!isShowPass)}
-        />
-      )}
+        {isShowPass ? (
+          <FaRegEye
+            size={22}
+            className="eye"
+            onClick={() => setIsShowPass(!isShowPass)}
+          />
+        ) : (
+          <FaRegEyeSlash
+            size={22}
+            className="eye-slash"
+            onClick={() => setIsShowPass(!isShowPass)}
+          />
+        )}
+      </div>
     </>
   );
 };

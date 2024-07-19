@@ -1,0 +1,74 @@
+.card-section{
+width: 100%;
+height: 100%;
+box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2), -4px 0 8px rgba(0, 0, 0, 0.2);
+padding: 10px 30px;
+border-radius: 10px;
+overflow: hidden;
+}
+.card-section:hover{
+box-shadow: 7px 8px 8px rgba(0, 0, 0, 0.2), -7px 0 8px rgba(0, 0, 0, 0.2);
+}
+.titles-icon-pin{
+display: flex;
+align-items: center;
+justify-content: space-between;
+}
+.titles{
+
+}
+.big-title{
+font-size: 20px;
+font-weight: 600;
+color: black;
+text-transform: capitalize;
+}
+.la-date{
+font-size: 15px;
+font-weight: 600;
+color: black;
+}
+.description-and-tags{
+margin-top: 10px;
+}
+.description-para{
+font-size: 13px;
+word-wrap: break-word;
+}
+.tags{
+margin-top: 10px;
+}
+.tag{
+margin-right: 5px;
+background-color: rgba(0, 0, 0, 0.2);
+}
+.tags-icons{
+display: flex;
+align-items: center;
+justify-content: space-between;
+}
+.icon-pin ,.icon-edit ,.icon-delete{
+height: 25px;
+width: 25px;
+cursor: pointer;
+}
+.icon-pinned{
+height: 25px;
+width: 25px;
+cursor: pointer;
+color: blue;
+}
+.icon-pinned:hover{
+color: grey;
+transition: .5s;
+}
+.icon-pin:hover ,.icon-edit:hover ,.icon-delete:hover{
+color: blue;
+transition: .5s;
+}
+.icon-edit{
+
+}
+.icon-delete{
+margin-right: 5px;
+}

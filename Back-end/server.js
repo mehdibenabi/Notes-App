@@ -2,8 +2,9 @@ require("dotenv").config();
 
 const config = require("./config.json");
 const mongoose = require("mongoose");
+const authRoute = require("../Back-end/Routes/authRoute");
 
-mongoose.connect(config.connectionString)
+mongoose.connect(config.connectionString).then(console.log("connected to db")).catch((err)=>{console.log(err)});
 
 
 
@@ -13,22 +14,26 @@ const app = express();
 const port = 8000;
 const MONGO_URI = process.env.MONGO_URI;
 
+
+
+// middleware
 app.use(express.json());
-
-app.use(cors({
-    origin:"*",
-})
-);
+app.use(express.urlencoded({ extended: true }));
+app.use(cors({origin:"*",}));
 
 
+//Routes
 
-app.listen(8000,()=>{
-console.log("server is listning in port 8000");
-});
+app.use("/",authRoute);
+
+
+
 
 app.get("/",(req,res) => {
     res.json({data : "hello"});
 });
+
+
 
 // mongoose.connect(`${MONGO_URI}`).then(() => {
 //   console.log("Connected to MongoDB");
@@ -38,5 +43,7 @@ app.get("/",(req,res) => {
 // });
 
 
-
+app.listen(8000, () => {
+  console.log("server is listning in port 8000");
+});
 module.exports= app;

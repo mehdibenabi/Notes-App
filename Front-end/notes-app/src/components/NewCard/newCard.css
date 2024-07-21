@@ -1,6 +1,6 @@
 
 .new-card-section{
-height: 600px;
+height: auto;
 width: 35%;
 background-color: white;
 box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2), -4px 0 8px rgba(0, 0, 0, 0.2);
@@ -56,11 +56,35 @@ resize: none;
 .tags-input{
 width: 100%;
 border: none;
-margin-bottom: 10px;
 height: 40px;
 font-size: 20px;
-margin-bottom: 20px;
+margin-right: 10px;
 text-align: center;
+}
+.add-tag{
+    height: 40px;
+    width: 40px;
+    color: blue;
+    cursor: pointer;
+    border: .5px solid blue;
+    border-radius: 5px;
+}
+.add-tag:hover{
+background-color: rgb(51, 51, 173);
+transition: .5s;
+}
+.icon-add-new-card:hover{
+    color: rgb(255, 255, 255);
+}
+.tag-and-btn{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+.icon-add-new-card{
+height: 30px;
+width: 30px;
 }
 .tags-label{
 font-size: 25px;
@@ -71,7 +95,7 @@ margin-bottom: 10px;
 border: none;
 background-color: rgb(51, 51, 173);
 border-radius: 15px;
-height:70px;
+height:50px;
 width: 100%;
 font-size: 18px;
 color: white;
@@ -81,4 +105,47 @@ cursor: pointer;
 .btn-create-card:hover{
 background-color: rgb(74, 74, 136);
 transition: .5s;
+}
+.error-new-card{
+color: red;
+font-size: 20px;
+font-weight: 600;
+margin-bottom: 10px;
+}
+.tags-container{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    overflow: scroll;
+}
+.tag-new-card{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 15px;
+    color: rgb(0, 0, 0);
+    margin-right: 7px;
+    background-color: rgba(0,0,0,.3);
+}
+.close-tag{
+border: none;
+border-radius: 5px;
+background-color: rgba(0, 0, 0, 0.2);
+cursor: pointer;
+}
+.close-tag:hover{ 
+background-color: rgb(51, 51, 173);
+transition: .5s;
+}
+.close-tag-icon{
+height: 20px;
+width: 20px;
+color: rgba(0,0,0,.5);
+}
+.close-tag-icon:hover{
+color: white;
+}
+.tag-and-btnClose{
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
 }

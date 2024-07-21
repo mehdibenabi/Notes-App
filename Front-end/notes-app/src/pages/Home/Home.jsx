@@ -1,18 +1,29 @@
-import React from 'react'
-import Navbar from '../../components/Navbar/Navbar'
-import './home.css'
-import Card from '../../components/Cards/Card'
+import React from "react";
+import Navbar from "../../components/Navbar/Navbar";
+import "./home.css";
+import Card from "../../components/Cards/Card";
 import { IoMdAdd } from "react-icons/io";
-import { useNavigate } from 'react-router-dom';
-import NewCard from '../../components/NewCard/NewCard';
-import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
+import NewCard from "../../components/NewCard/NewCard";
+import { useState } from "react";
+import Modal from "react-modal";
+
+
+Modal.setAppElement("#app");
 
 const Home = () => {
-  const navigate = useNavigate();
-  const [isClicked, setIsClicked] = useState(false);
+  const [openAddEditModal, setOpenAddEditModal] = useState({
+    isShown: false,
+    type: "add",
+    data: null,
+  });
   const handleClick = () => {
-    setIsClicked(!isClicked);
-  }
+    setOpenAddEditModal({
+      isShown: true,
+      type: "add",
+      data: null,
+    });
+  };
   return (
     <>
       <div className="all-home">
@@ -21,7 +32,7 @@ const Home = () => {
         <div className="grid-and-btn">
           <div className="cards-grid">
             {/* <Card paragraph={paragraph} title={title} date={date} tags={tags} isPinned={isPinned}/> */}
-            <Card isPinned={true}/>
+            <Card isPinned={true} />
             <Card />
             <Card />
             <Card />
@@ -40,12 +51,26 @@ const Home = () => {
           </div>
         </div>
 
-        {isClicked && (<div className={isClicked ? "new-card-sec" : null}>
-          <NewCard className="the-new-card" setIsClicked={setIsClicked}/>
-        </div>)}
+        <Modal
+          isOpen={openAddEditModal.isShown}
+          onReqClose={() => {}}
+          style={{
+            overlay: {
+              backgroundColor: "rgba(0, 0, 0, 0.2)",
+            },
+          }}
+          className="Modal-edit-add"
+        >
+          <NewCard
+            className="the-new-card"
+            setOpenAddEditModal={setOpenAddEditModal}
+            type={openAddEditModal.type}
+            data={openAddEditModal.data}
+          />
+        </Modal>
       </div>
     </>
   );
-}
+};
 
-export default Home
+export default Home;

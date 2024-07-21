@@ -7,6 +7,15 @@ import { useState } from "react";
 
 const Card = ({paragraph,title,date,tags,isPinned}) => {
 
+  const OnEditNote = () =>{
+    
+  }
+  
+  const OnDeleteNote = () =>{
+
+  }
+    
+
   return (
     <div className="card-section">
       <div className="titles-icon-pin">
@@ -38,8 +47,13 @@ const Card = ({paragraph,title,date,tags,isPinned}) => {
           </div>
 
           <div className="icon-delete-edit">
-            <MdDelete className="icon-delete" />
-            <MdModeEdit className="icon-edit" />
+            <button className="btn-delete-note">
+              <MdDelete className="icon-delete" />
+            </button>
+
+            <button className="edit-card" onClick={() => {OnDeleteNote()}}>
+              <MdModeEdit className="icon-edit" onClick={() => {OnEditNote()}} />
+            </button>
           </div>
         </div>
       </div>

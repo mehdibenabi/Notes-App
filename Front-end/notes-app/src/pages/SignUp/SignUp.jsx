@@ -4,33 +4,63 @@ import "./signUp.css";
 import { useState } from "react";
 import PasswordInput from "../../components/PasswordInput/PasswordInput";
 import { validateEmail } from "../../utils/validateEmail";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axiosInstance from "../../utils/axiosInstance";
 
 const SignUp = () => {
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-    const [email, setEmail] = useState("");
-    const [name, setName] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      if (!email || !password || !name) {
-        setError("please fill all the fields");
-        return;
+  const SignUpUser = async (Email, FullName, Password) => {
+    try {
+      const response = await axiosInstance.post("/createuser", {
+        fullName: FullName,
+        email: Email,
+        password: Password,
+      });
+
+      console.log(response);
+
+      if (response.data.error === false) {
+        setError(response.data.message);
+        navigate("/login");
+      } else {
+        setError(response.data.message);
       }
-      if (!validateEmail(email)) {
-        setError("please enter a valid email");
-        return;
+    } catch (error) {
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        setError(error.response.data.message);
+      } else {
+        setError("Something went wrong");
       }
-      setEmail("");
-      setName("");
-      setPassword("");
-      setError("");
-      console.log(email, password,name);
+    }
+  };
 
-      //API CALL
-    };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!email || !password || !name) {
+      setError("Please fill all the fields");
+      return;
+    }
+    if (!validateEmail(email)) {
+      setError("Please enter a valid email");
+      return;
+    }
+    setError("");
+    console.log(email, password, name);
+
+    // API CALL
+    SignUpUser(email, name, password);
+  };
+
   return (
     <>
       <Navbar />

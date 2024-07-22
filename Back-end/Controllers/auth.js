@@ -50,10 +50,10 @@ const CreateUser = async (req,res ) =>{
         });
 
         return res.json({
+            message:"Registration Successful",
             error:false,
             user,
             accessToken,
-            message:"Registration Successful",
         })
     
     } catch (error) {
@@ -81,14 +81,38 @@ const LoginUser = async (req,res) =>{
             });
         }
 
-        const isUser = await User.findOne({email:email});
-        if(!isUser){
+        const UserInfo = await User.findOne({email:email});
+        if(!UserInfo){
             return  res.json({
                 error :true,
-                message :"User doesn't exist"
+                message :"User not found"
             })
         }
+
+        if(UserInfo.email==email && UserInfo.password==password){
+            const user = {user : UserInfo}
+            const accessToken = jwt.sign(user, process.env.SECRET_ACCESS_TOKEN , {
+                expiresIn : "360000m"
+            });
+
+            return res.json({
+                message :"user logged in succefully",
+                error:false,
+                accessToken,
+                email,
+            });
         }
+
+            else {
+                return res.status(401).json({
+                    error:true,
+                    message:"Invalid Credentials"
+                });
+            }
+        }
+
+
+        
         
     catch (error) {
         return res.status(500).json({
@@ -98,5 +122,25 @@ const LoginUser = async (req,res) =>{
     }
 }
 
+const GetUserInfo = async (req,res) =>{
 
-module.exports = {CreateUser , LoginUser};
+    const {user}=req.user;
+
+    const isUser = await User.findOne({_id:user._id});
+
+    if (!isUser) {
+      return res.status(401);
+    }
+
+    return res.status(200).json({
+      error: false,
+      data: {
+        fullName: isUser.fullName,
+        email:isUser.email,
+        id:isUser._id,
+        CreatedOn : isUser.CreatedOn
+      }
+    });
+}
+
+module.exports = {CreateUser , LoginUser , GetUserInfo};

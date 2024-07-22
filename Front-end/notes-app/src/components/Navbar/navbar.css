@@ -16,4 +16,11 @@ height: 80px;
     font-weight: 600;
     color: #000000;
     margin-left: 1rem;
+    margin-right: 35%;
+}
+.search-user-info{
+    display: flex;
+    align-items:center;
+    justify-content:space-between;
+    width: 100%;
 }

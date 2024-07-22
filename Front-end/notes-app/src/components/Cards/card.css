@@ -72,3 +72,6 @@ transition: .5s;
 .icon-delete{
 margin-right: 5px;
 }
+.edit-card , .btn-delete-note{
+    border:none;
+}

@@ -1,31 +1,40 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./navbar.css";
 import ProfilInfo from "../ProfilInfo/ProfilInfo";
 import SearchBar from "../SearchBar/SearchBar";
-import { useState } from "react";
-
 
 const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [user, setUser] = useState(null);
 
-  const onClearSearch = () =>{
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setUser(token);
+  }, []);
+
+  const onClearSearch = () => {
     setSearchQuery("");
-  }
+  };
+
   const handleSearch = () => {
     console.log("searching for", searchQuery);
-  }
+  };
+
   return (
     <div className="section-nav">
       <h2 className="titleNav">Notes</h2>
 
-      <SearchBar
-      value={searchQuery}
-      onChange={(e) => setSearchQuery(e.target.value)}
-      onClearSearch={onClearSearch}
-      handleSearch={handleSearch}
-      />
-
-      <ProfilInfo />
+      {user ? (
+        <div className="search-user-info">
+          <SearchBar
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onClearSearch={onClearSearch}
+            handleSearch={handleSearch}
+          />
+          <ProfilInfo />
+        </div>
+      ) : null}
     </div>
   );
 };

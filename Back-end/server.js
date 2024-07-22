@@ -3,6 +3,7 @@ require("dotenv").config();
 const config = require("./config.json");
 const mongoose = require("mongoose");
 const authRoute = require("../Back-end/Routes/authRoute");
+const notesRoute = require("../Back-end/Routes/notesRoute");
 
 mongoose.connect(config.connectionString).then(console.log("connected to db")).catch((err)=>{console.log(err)});
 
@@ -25,6 +26,7 @@ app.use(cors({origin:"*",}));
 //Routes
 
 app.use("/",authRoute);
+app.use("/",notesRoute);
 
 
 

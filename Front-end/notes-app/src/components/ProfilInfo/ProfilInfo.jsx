@@ -7,6 +7,8 @@ const ProfilInfo = () => {
 
     const navigate = useNavigate();
     const handleClick = () =>{
+
+        localStorage.removeItem('token');
         navigate('/login');
     }
   return (

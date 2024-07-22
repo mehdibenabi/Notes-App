@@ -23,7 +23,7 @@ const SignUp = () => {
         password: Password,
       });
 
-      console.log(response);
+      // console.log(response);
 
       if (response.data.error === false) {
         setError(response.data.message);
@@ -55,7 +55,7 @@ const SignUp = () => {
       return;
     }
     setError("");
-    console.log(email, password, name);
+    // console.log(email, password, name);
 
     // API CALL
     SignUpUser(email, name, password);

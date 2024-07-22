@@ -3,7 +3,7 @@ import {getInitials} from '../../utils/getInitials'
 import './profilInfo.css'
 import { useNavigate } from 'react-router-dom'
 
-const ProfilInfo = () => {
+const ProfilInfo = ({userInfo}) => {
 
     const navigate = useNavigate();
     const handleClick = () =>{
@@ -15,14 +15,14 @@ const ProfilInfo = () => {
     <div className='profil-info-section'>
         <div className="abr-name">
        <p>
-        {getInitials("John william")}
+        {getInitials(userInfo.fullName)}
        </p>
         </div>
 
         <div className="section-logout-name">
 
         <h5 className="profil-name">
-            William
+            {userInfo.fullName}
         </h5>
         <button onClick={handleClick} className="btn-profil-logout">Logout</button>      
 

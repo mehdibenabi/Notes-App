@@ -51,7 +51,7 @@ const Login = () => {
     }
 
     setError("");
-    console.log(email, password);
+    // console.log(email, password);
 
     // API call
     loginUser(email, password);
@@ -63,7 +63,7 @@ const Login = () => {
 
       <div className="section-log">
         <div className="login">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} className="login-form">
             <h4 className="login-title">LOGIN</h4>
 
             <input

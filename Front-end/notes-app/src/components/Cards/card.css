@@ -62,8 +62,12 @@ color: blue;
 color: grey;
 transition: .5s;
 }
-.icon-pin:hover ,.icon-edit:hover ,.icon-delete:hover{
+.icon-pin:hover ,.icon-edit:hover {
 color: blue;
+transition: .5s;
+}
+.icon-delete:hover{
+    color: rgb(255, 0, 0);
 transition: .5s;
 }
 .icon-edit{
@@ -73,5 +77,9 @@ transition: .5s;
 margin-right: 5px;
 }
 .edit-card , .btn-delete-note{
+    border:none;
+}
+
+.pin-btn{
     border:none;
 }

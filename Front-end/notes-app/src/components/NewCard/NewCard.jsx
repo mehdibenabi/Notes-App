@@ -2,21 +2,55 @@ import React, { useState, useEffect } from "react";
 import './newCard.css'
 import { IoMdClose } from "react-icons/io";
 import {MdClose , MdAdd} from "react-icons/md"
+import axiosInstance from "../../utils/axiosInstance";
 
-const NewCard = ({setOpenAddEditModal , type, data}) => {
+const NewCard = ({setOpenAddEditModal , type, data , getAllNotes}) => {
 
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+  const [title, setTitle] = useState(data?.title || "");
+  const [content, setContent] = useState(data?.content || "");
   const [tag, setTag] = useState("");
-  const [tags,setTags] = useState([]);
+  const [tags,setTags] = useState(data?.tags || []);
   const [error,setError] = useState("");
 
-  const EditNote = () =>{
 
+  const addNewNote = async ()=>{
+    try {
+      const response = await axiosInstance.post("/add-note",{
+        title:title,
+        content:content,
+        tags:tags
+      });
+      if(!response.data.error){
+        console.log(response);
+        setError(response.data.message);
+        getAllNotes();
+      }
+    } catch (error) {
+      console.log(response.data.error);
+    }
+  }
+
+  const EditNote = async () =>{
+    try {
+      const noteId = data._id;
+      const response = await axiosInstance.put(`/edit-note/${noteId}`, {
+        title: title,
+        content: content,
+        tags: tags,
+      });
+      if(!response.data.error){
+        console.log(response);
+        setError(response.data.message);
+        getAllNotes();
+      }
+    } catch (error) {
+      console.log(response.data.error);
+    }
   }
 
   const AddNote = () =>{
-
+    addNewNote();
+    
   }
 
   const handleSubmit = (e) => {
@@ -33,11 +67,11 @@ const NewCard = ({setOpenAddEditModal , type, data}) => {
 
     // API CALL
 
-    setTitle("");
-    setContent("");
-    setTags([]);
+    // setTitle("");
+    // setContent("");
+    // setTags([]);
 
-    if(type="edit"){
+    if(type==="edit"){
       EditNote();
     }else{
       AddNote();
@@ -69,8 +103,6 @@ const onRemoveTag = (tagToRemove) =>{
         onClick={() => {
           setOpenAddEditModal({
             isShown: false,
-            type: "add",
-            data: null,
           });
         }}
       />
@@ -147,7 +179,7 @@ const onRemoveTag = (tagToRemove) =>{
 
         {error && <p className="error-new-card">{error}</p>}
         <button type="submit" className="btn-create-card">
-          Create Card
+          {type === "edit" ? "Update" : "Create Card"}
         </button>
       </form>
     </div>

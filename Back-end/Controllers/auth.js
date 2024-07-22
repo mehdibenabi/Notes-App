@@ -134,7 +134,7 @@ const GetUserInfo = async (req,res) =>{
 
     return res.status(200).json({
       error: false,
-      data: {
+      user: {
         fullName: isUser.fullName,
         email:isUser.email,
         id:isUser._id,

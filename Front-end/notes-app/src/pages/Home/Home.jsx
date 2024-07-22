@@ -5,9 +5,9 @@ import Card from "../../components/Cards/Card";
 import { IoMdAdd } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import NewCard from "../../components/NewCard/NewCard";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Modal from "react-modal";
-
+import axiosInstance from "../../utils/axiosInstance";
 
 Modal.setAppElement("#app");
 
@@ -17,6 +17,9 @@ const Home = () => {
     type: "add",
     data: null,
   });
+  const [userInfo, setUserInfo] = useState("");
+  const [notes, setNotes] = useState([]);
+
   const handleClick = () => {
     setOpenAddEditModal({
       isShown: true,
@@ -24,24 +27,77 @@ const Home = () => {
       data: null,
     });
   };
+
+  const getUserInfo = async () => {
+    try {
+      const response = await axiosInstance.get("/get-user");
+      if (!response.data.error) {
+        console.log(response.data.user);
+        setUserInfo(response.data.user);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getAllNotes = async () => {
+    try {
+      const response = await axiosInstance.get("/get-notes");
+      if (!response.data.error) {
+        console.log(response.data.data);
+        setNotes(response.data.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const EditNote = (note) =>{
+    setOpenAddEditModal({
+      isShown: true,
+      type: "edit",
+      data: note,
+    });
+  }
+
+  const onDelete = async (note) => {
+    try {
+      const response = await axiosInstance.delete(`/delete-note/${note._id}`);
+      if (!response.data.error) {
+        console.log(response.data.data);
+        setError(response.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      console.log(response.data.message);
+    }
+  };
+
+  useEffect(() => {
+    getUserInfo();
+    getAllNotes();
+  }, []);
   return (
     <>
       <div className="all-home">
-        <Navbar />
+        <Navbar userInfo={userInfo} />
 
         <div className="grid-and-btn">
           <div className="cards-grid">
             {/* <Card paragraph={paragraph} title={title} date={date} tags={tags} isPinned={isPinned}/> */}
-            <Card isPinned={true} />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
-            <Card />
+            {notes.map((note,index) => {
+              return (
+                <Card
+                  key={index}
+                  note={note}
+                  tags={note.tags}
+                  // setOpenAddEditModal={setOpenAddEditModal}
+                  onEdit={()=>{EditNote(note)}}
+                  onDelete={()=>{onDelete(note)}}
+                  getAllNotes={getAllNotes}
+                />
+              );
+            })}
           </div>
 
           <div className="btn-add-card">
@@ -66,6 +122,7 @@ const Home = () => {
             setOpenAddEditModal={setOpenAddEditModal}
             type={openAddEditModal.type}
             data={openAddEditModal.data}
+            getAllNotes={getAllNotes}
           />
         </Modal>
       </div>

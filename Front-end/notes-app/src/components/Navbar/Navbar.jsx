@@ -3,7 +3,7 @@ import "./navbar.css";
 import ProfilInfo from "../ProfilInfo/ProfilInfo";
 import SearchBar from "../SearchBar/SearchBar";
 
-const Navbar = () => {
+const Navbar = ({userInfo}) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [user, setUser] = useState(null);
 
@@ -32,7 +32,7 @@ const Navbar = () => {
             onClearSearch={onClearSearch}
             handleSearch={handleSearch}
           />
-          <ProfilInfo />
+          <ProfilInfo userInfo={userInfo}/>
         </div>
       ) : null}
     </div>

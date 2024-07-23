@@ -1,3 +1,5 @@
+Notes App using MERN stack. Here are the functionalities implemented in this project:
+
 1. User Authentication: login and signup functionality.
 
 2. Note Creation: Easily add new notes to your collection.

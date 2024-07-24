@@ -1,0 +1,29 @@
+.sec-no-cords{
+width: 100%;
+height: 100vh;
+display: flex;
+align-items:center;
+justify-content:center;
+}
+.section-sghira{
+width: 50%;
+height : 50%;
+display: flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+
+}
+.no-cards-img{
+    height:80%;
+    width: 80%;
+}
+.no-cards-text{
+font-weight: 600;
+font-size: 20px;
+text-align:center;
+}
+.lets-get-started-msg{
+    color:blue;
+    text-decoration:underline;
+}

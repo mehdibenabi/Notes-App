@@ -4,33 +4,38 @@ import { IoMdClose } from "react-icons/io";
 import {MdClose , MdAdd} from "react-icons/md"
 import axiosInstance from "../../utils/axiosInstance";
 
-const NewCard = ({setOpenAddEditModal , type, data , getAllNotes}) => {
-
+const NewCard = ({
+  setOpenAddEditModal,
+  type,
+  data,
+  getAllNotes,
+  showToastMessage,
+}) => {
   const [title, setTitle] = useState(data?.title || "");
   const [content, setContent] = useState(data?.content || "");
   const [tag, setTag] = useState("");
-  const [tags,setTags] = useState(data?.tags || []);
-  const [error,setError] = useState("");
+  const [tags, setTags] = useState(data?.tags || []);
+  const [error, setError] = useState("");
 
-
-  const addNewNote = async ()=>{
+  const addNewNote = async () => {
     try {
-      const response = await axiosInstance.post("/add-note",{
-        title:title,
-        content:content,
-        tags:tags
+      const response = await axiosInstance.post("/add-note", {
+        title: title,
+        content: content,
+        tags: tags,
       });
-      if(!response.data.error){
-        console.log(response);
-        setError(response.data.message);
+      if (!response.data.error) {
+        // console.log(response);
+        showToastMessage("Note Added Successfully");
+        // setError(response.data.message);
         getAllNotes();
       }
     } catch (error) {
       console.log(response.data.error);
     }
-  }
+  };
 
-  const EditNote = async () =>{
+  const EditNote = async () => {
     try {
       const noteId = data._id;
       const response = await axiosInstance.put(`/edit-note/${noteId}`, {
@@ -38,29 +43,29 @@ const NewCard = ({setOpenAddEditModal , type, data , getAllNotes}) => {
         content: content,
         tags: tags,
       });
-      if(!response.data.error){
-        console.log(response);
-        setError(response.data.message);
+      if (!response.data.error) {
+        // console.log(response);
+        showToastMessage("Note Updated Successfully");
+        // setError(response.data.message);
         getAllNotes();
       }
     } catch (error) {
       console.log(response.data.error);
     }
-  }
+  };
 
-  const AddNote = () =>{
+  const AddNote = () => {
     addNewNote();
-    
-  }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(title,content,tags);
-    if(!title) {
+    console.log(title, content, tags);
+    if (!title) {
       setError("Title is required");
       return;
     }
-    if(!content) {
+    if (!content) {
       setError("Content is required");
       return;
     }
@@ -71,29 +76,29 @@ const NewCard = ({setOpenAddEditModal , type, data , getAllNotes}) => {
     // setContent("");
     // setTags([]);
 
-    if(type==="edit"){
+    if (type === "edit") {
       EditNote();
-    }else{
+    } else {
       AddNote();
     }
+  };
 
-};
+  const addTag = (e) => {
+    e.preventDefault();
+    if (tag.trim() !== "") {
+      setTags([...tags, tag.trim()]);
+      setTag("");
+    }
+  };
 
-const addTag = (e) =>{
-  e.preventDefault();
-  if(tag.trim() !== ""){
-    setTags([...tags,tag.trim()]);
-    setTag("");
-  }
-}
-
-const onRemoveTag = (tagToRemove) =>{
-  const newTags = tags.filter((tag)=> tag !== tagToRemove)
-  setTags(newTags);
-}
-// useEffect(() => {
-//   console.log("Tags updated:", tags);
-// }, [tags]);
+  const onRemoveTag = (tagToRemove, e) => {
+    e.preventDefault();
+    const newTags = tags.filter((tag) => tag !== tagToRemove);
+    setTags(newTags);
+  };
+  // useEffect(() => {
+  //   console.log("Tags updated:", tags);
+  // }, [tags]);
 
   return (
     <div className="new-card-section">
@@ -149,10 +154,7 @@ const onRemoveTag = (tagToRemove) =>{
             onChange={(e) => setTag(e.target.value)}
           />
 
-          <button
-            className="add-tag"
-            onClick={addTag}
-          >
+          <button className="add-tag" onClick={addTag}>
             <MdAdd className="icon-add-new-card" />
           </button>
         </div>
@@ -167,8 +169,8 @@ const onRemoveTag = (tagToRemove) =>{
                   <button className="close-tag">
                     <MdClose
                       className="close-tag-icon"
-                      onClick={() => {
-                        onRemoveTag(tagg);
+                      onClick={(e) => {
+                        onRemoveTag(tagg, e);
                       }}
                     />
                   </button>

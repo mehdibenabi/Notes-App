@@ -202,5 +202,41 @@ const UpdateIsPinned = async (req,res) =>{
 
 }
 
+const SearchNotes = async (req,res)=>{
+  const {user}=req.user;
+  const { query } = req.query;
+  
+  
+  if (!query) {
+    return res.status(400).json({
+      error: true,
+      mesage: "Search query is required",
+    });
+  }
+        
+    try {
+        const notes = await Note.find({
+          user: user._id,
+          $or: [
+            { title: { $regex: new RegExp(query, "i") } },
+            { content: { $regex: new RegExp(query, "i") } },
+          ],
+        });
 
-module.exports = {CreateNote,EditNote,DeleteNote,GetNotes,GetNoteById,UpdateIsPinned};
+        return res.status(200).json({
+            error:false,
+            notes:notes,
+            message:"Notes matching the search query retrieved successfully"
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            error:true,
+            message:"Internal server error"
+        });
+    }
+
+}
+
+
+module.exports = {SearchNotes,CreateNote,EditNote,DeleteNote,GetNotes,GetNoteById,UpdateIsPinned};

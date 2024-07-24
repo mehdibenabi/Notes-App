@@ -8,6 +8,8 @@ import NewCard from "../../components/NewCard/NewCard";
 import { useState, useEffect } from "react";
 import Modal from "react-modal";
 import axiosInstance from "../../utils/axiosInstance";
+import NoCards from "../../components/NoCards/NoCards";
+import Toast from "../../components/Toast.jsx/Toast";
 
 Modal.setAppElement("#app");
 
@@ -17,8 +19,30 @@ const Home = () => {
     type: "add",
     data: null,
   });
+  const [showToastMsg, setShowToastMsg] = useState({
+    isShown: false,
+    type: "add",
+    message:""
+  });
   const [userInfo, setUserInfo] = useState("");
   const [notes, setNotes] = useState([]);
+  const [isSearch,setIsSearch] = useState(false);
+
+
+  const showToastMessage = (message,type) =>{
+    setShowToastMsg({
+      isShown:true,
+      message:message,
+      type:type,
+    });
+  } 
+  
+  const handleOncloseToast = () =>{
+    setShowToastMsg({
+      isShown:false,
+      message:""
+    });
+  }
 
   const handleClick = () => {
     setOpenAddEditModal({
@@ -60,18 +84,27 @@ const Home = () => {
     });
   }
 
-  const onDelete = async (note) => {
-    try {
-      const response = await axiosInstance.delete(`/delete-note/${note._id}`);
-      if (!response.data.error) {
-        console.log(response.data.data);
-        setError(response.data.message);
+    const Search = async (query) => {
+      try {
+        const response = await axiosInstance.get("/search-notes", {
+          params: { query },
+        });
+
+        if (response.data && response.data.notes) {
+          setNotes(response.data.notes);
+          setIsSearch(true);
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
-      console.log(response.data.message);
+    };
+
+    const handleSearch = () =>{
+      setIsSearch(false);
+      getAllNotes();
     }
-  };
+
+
 
   useEffect(() => {
     getUserInfo();
@@ -80,25 +113,34 @@ const Home = () => {
   return (
     <>
       <div className="all-home">
-        <Navbar userInfo={userInfo} />
+        <Navbar
+          userInfo={userInfo}
+          onSearch={Search}
+          handleSearch2={handleSearch}
+        />
 
         <div className="grid-and-btn">
-          <div className="cards-grid">
-            {/* <Card paragraph={paragraph} title={title} date={date} tags={tags} isPinned={isPinned}/> */}
-            {notes.map((note,index) => {
-              return (
-                <Card
-                  key={index}
-                  note={note}
-                  tags={note.tags}
-                  // setOpenAddEditModal={setOpenAddEditModal}
-                  onEdit={()=>{EditNote(note)}}
-                  onDelete={()=>{onDelete(note)}}
-                  getAllNotes={getAllNotes}
-                />
-              );
-            })}
-          </div>
+          {notes.length > 0 ? (
+            <div className="cards-grid">
+              {notes.map((note, index) => {
+                return (
+                  <Card
+                    key={index}
+                    note={note}
+                    tags={note.tags}
+                    // setOpenAddEditModal={setOpenAddEditModal}
+                    onEdit={() => {
+                      EditNote(note);
+                    }}
+                    getAllNotes={getAllNotes}
+                    showToastMessage={showToastMessage}
+                  />
+                );
+              })}
+            </div>
+          ) : (
+            <NoCards isSearch={isSearch}/>
+          )}
 
           <div className="btn-add-card">
             <button className="btn-add" onClick={handleClick}>
@@ -123,8 +165,16 @@ const Home = () => {
             type={openAddEditModal.type}
             data={openAddEditModal.data}
             getAllNotes={getAllNotes}
+            showToastMessage={showToastMessage}
           />
         </Modal>
+
+        <Toast
+          isShown={showToastMsg.isShown}
+          message={showToastMsg.message}
+          type={showToastMsg.type}
+          onClose={handleOncloseToast}
+        />
       </div>
     </>
   );

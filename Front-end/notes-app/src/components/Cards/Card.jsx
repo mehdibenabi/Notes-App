@@ -3,41 +3,42 @@ import "./card.css";
 import { TiPinOutline } from "react-icons/ti";
 import { MdDelete } from "react-icons/md";
 import { MdModeEdit } from "react-icons/md";
-import { useState, useEffect } from "react";
 import moment from "moment";
 import axiosInstance from "../../utils/axiosInstance";
 
-const Card = ({note,tags,onEdit,onDelete,getAllNotes}) => {
-
-
-  const OnEditNote = () =>{
+const Card = ({ note, tags, onEdit, getAllNotes, showToastMessage }) => {
+  const OnEditNote = () => {
     onEdit();
-  }
-  
-  const OnDeleteNote = () =>{
-    onDelete();
-    getAllNotes();
-  }
+  };
 
-  const updatePin = async (id) =>{
+  const onDelete = async (id) => {
     try {
-      const response = await axiosInstance.put(`/update-pin/${id}`,{
-        isPinned: !note.isPinned,
-      });
-      if(!response.data.error){
-        console.log(response);
+      const response = await axiosInstance.delete(`/delete-note/${id}`);
+      if (!response.data.error) {
+        console.log(response.data.data);
+        showToastMessage("Note Deleted Successfully","delete")
         getAllNotes();
       }
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
+  const updatePin = async (id) => {
+    try {
+      const response = await axiosInstance.put(`/update-pin/${id}`, {
+        isPinned: !note.isPinned,
+      });
+      if (!response.data.error) {
+        showToastMessage("Note Updated Successfully", "edit");
+        // console.log(response);
+        getAllNotes();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-
-
-    
-// console.log(tags);
   return (
     <div className="card-section">
       <div className="titles-icon-pin">
@@ -47,8 +48,15 @@ const Card = ({note,tags,onEdit,onDelete,getAllNotes}) => {
             {moment(note.createdOn).format("DD MMM YYYY")}
           </h4>
         </div>
-        <button className="pin-btn" onClick={()=>{updatePin(note._id)}}>
-        <TiPinOutline className={note.isPinned ? "icon-pinned" : "icon-pin"} />
+        <button
+          className="pin-btn"
+          onClick={() => {
+            updatePin(note._id);
+          }}
+        >
+          <TiPinOutline
+            className={note.isPinned ? "icon-pinned" : "icon-pin"}
+          />
         </button>
       </div>
       <div className="description-and-tags">
@@ -56,31 +64,25 @@ const Card = ({note,tags,onEdit,onDelete,getAllNotes}) => {
 
         <div className="tags-icons">
           <div className="tags">
-            {tags.map((tag, index) => {
-              return (
-                <span className="tag" key={index}>
-                  #{tag}{" "}
-                </span>
-              );
-            })}
+            {tags.map((tag, index) => (
+              <span className="tag" key={index}>
+                #{tag}{" "}
+              </span>
+            ))}
           </div>
 
           <div className="icon-delete-edit">
             <button
               className="btn-delete-note"
-              onClick={() => {
-                OnDeleteNote();
-              }}
+              onClick={
+                () => onDelete(note._id)
+                // console.log(note)
+              }
             >
               <MdDelete className="icon-delete" />
             </button>
 
-            <button
-              className="edit-card"
-              onClick={() => {
-                OnEditNote();
-              }}
-            >
+            <button className="edit-card" onClick={OnEditNote}>
               <MdModeEdit className="icon-edit" />
             </button>
           </div>

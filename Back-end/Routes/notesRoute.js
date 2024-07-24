@@ -2,7 +2,15 @@ const express = require("express");
 const router = express.Router();
 const {authentificateToken}=require("../Middlewares/authToken");
 
-const {CreateNote,EditNote,DeleteNote,GetNotes,GetNoteById,UpdateIsPinned} = require("../Controllers/Notes");
+const {
+  CreateNote,
+  EditNote,
+  DeleteNote,
+  GetNotes,
+  GetNoteById,
+  UpdateIsPinned,
+  SearchNotes,
+} = require("../Controllers/Notes");
 
 //create note
 router.post("/add-note",authentificateToken,CreateNote);
@@ -21,6 +29,9 @@ router.get("/get-note/:NoteId", authentificateToken, GetNoteById);
 
 //update pin 
 router.put("/update-pin/:id",authentificateToken,UpdateIsPinned);
+
+//Search Notes
+router.get("/search-notes",authentificateToken,SearchNotes);
 
 
 

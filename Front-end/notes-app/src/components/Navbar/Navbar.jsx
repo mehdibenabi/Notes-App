@@ -3,7 +3,7 @@ import "./navbar.css";
 import ProfilInfo from "../ProfilInfo/ProfilInfo";
 import SearchBar from "../SearchBar/SearchBar";
 
-const Navbar = ({userInfo}) => {
+const Navbar = ({ userInfo, onSearch, handleSearch2 }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [user, setUser] = useState(null);
 
@@ -14,10 +14,13 @@ const Navbar = ({userInfo}) => {
 
   const onClearSearch = () => {
     setSearchQuery("");
+    handleSearch2();
   };
 
   const handleSearch = () => {
-    console.log("searching for", searchQuery);
+    if (searchQuery) {
+      onSearch(searchQuery);
+    }
   };
 
   return (
@@ -32,7 +35,7 @@ const Navbar = ({userInfo}) => {
             onClearSearch={onClearSearch}
             handleSearch={handleSearch}
           />
-          <ProfilInfo userInfo={userInfo}/>
+          <ProfilInfo userInfo={userInfo} />
         </div>
       ) : null}
     </div>

@@ -16,7 +16,7 @@ const Login = () => {
   const loginUser = async (email, password) => {
     try {
       const response = await axiosInstance.post(
-        "https://notes-app-back-end-mu.vercel.app/login",
+        "/login",
         {
           email: email,
           password: password,

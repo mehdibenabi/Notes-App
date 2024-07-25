@@ -20,7 +20,7 @@ const NewCard = ({
   const addNewNote = async () => {
     try {
       const response = await axiosInstance.post(
-        "https://notes-app-back-end-mu.vercel.app/add-note",
+        "/add-note",
         {
           title: title,
           content: content,
@@ -42,7 +42,7 @@ const NewCard = ({
     try {
       const noteId = data._id;
       const response = await axiosInstance.put(
-        `https://notes-app-back-end-mu.vercel.app/edit-note/${noteId}`,
+        `/edit-note/${noteId}`,
         {
           title: title,
           content: content,

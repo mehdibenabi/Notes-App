@@ -14,7 +14,7 @@ const Card = ({ note, tags, onEdit, getAllNotes, showToastMessage }) => {
   const onDelete = async (id) => {
     try {
       const response = await axiosInstance.delete(
-        `https://notes-app-back-end-mu.vercel.app/delete-note/${id}`
+        `/delete-note/${id}`
       );
       if (!response.data.error) {
         console.log(response.data.data);
@@ -29,7 +29,7 @@ const Card = ({ note, tags, onEdit, getAllNotes, showToastMessage }) => {
   const updatePin = async (id) => {
     try {
       const response = await axiosInstance.put(
-        `https://notes-app-back-end-mu.vercel.app/update-pin/${id}`,
+        `/update-pin/${id}`,
         {
           isPinned: !note.isPinned,
         }

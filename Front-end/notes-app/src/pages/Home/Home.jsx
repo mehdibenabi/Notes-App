@@ -55,7 +55,7 @@ const Home = () => {
   const getUserInfo = async () => {
     try {
       const response = await axiosInstance.get(
-        "https://notes-app-back-end-mu.vercel.app/get-user"
+        "/get-user"
       );
       if (!response.data.error) {
         console.log(response.data.user);
@@ -69,7 +69,7 @@ const Home = () => {
   const getAllNotes = async () => {
     try {
       const response = await axiosInstance.get(
-        "https://notes-app-back-end-mu.vercel.app/get-notes"
+        "/get-notes"
       );
       if (!response.data.error) {
         console.log(response.data.data);
@@ -91,7 +91,7 @@ const Home = () => {
     const Search = async (query) => {
       try {
         const response = await axiosInstance.get(
-          "https://notes-app-back-end-mu.vercel.app/search-notes",
+          "/search-notes",
           {
             params: { query },
           }

@@ -12,7 +12,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
-  origin: "https://notes-app-front-sable.vercel.app",
+  origin: ('*'),
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));

@@ -9,3 +9,6 @@ Notes App using MERN stack. Here are the functionalities implemented in this pro
 4. Note Pinning: Prioritize important notes by pinning them to the top.
 
 5. Note Searching: Search through the notes
+
+
+link : https://notes-app-jt0k.onrender.com

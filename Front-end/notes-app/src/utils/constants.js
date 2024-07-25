@@ -1,1 +1,1 @@
-export const BASE_URL = "https://notes-app-back-end-o2pn.onrender.com";
+export const BASE_URL="https://notes-app-back-end-o2pn.onrender.com";

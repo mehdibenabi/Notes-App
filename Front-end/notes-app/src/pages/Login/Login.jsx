@@ -15,10 +15,13 @@ const Login = () => {
 
   const loginUser = async (email, password) => {
     try {
-      const response = await axiosInstance.post("/login", {
-        email: email,
-        password: password,
-      });
+      const response = await axiosInstance.post(
+        "https://notes-app-back-end-mu.vercel.app/login",
+        {
+          email: email,
+          password: password,
+        }
+      );
 
       if (response.data.error === true) {
         setError(response.data.message);

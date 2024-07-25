@@ -17,11 +17,14 @@ const SignUp = () => {
 
   const SignUpUser = async (Email, FullName, Password) => {
     try {
-      const response = await axiosInstance.post("/createuser", {
-        fullName: FullName,
-        email: Email,
-        password: Password,
-      });
+      const response = await axiosInstance.post(
+        "https://notes-app-back-end-mu.vercel.app/createuser",
+        {
+          fullName: FullName,
+          email: Email,
+          password: Password,
+        }
+      );
 
       // console.log(response);
 

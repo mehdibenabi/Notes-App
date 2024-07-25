@@ -19,11 +19,14 @@ const NewCard = ({
 
   const addNewNote = async () => {
     try {
-      const response = await axiosInstance.post("/add-note", {
-        title: title,
-        content: content,
-        tags: tags,
-      });
+      const response = await axiosInstance.post(
+        "https://notes-app-back-end-mu.vercel.app/add-note",
+        {
+          title: title,
+          content: content,
+          tags: tags,
+        }
+      );
       if (!response.data.error) {
         // console.log(response);
         showToastMessage("Note Added Successfully");
@@ -38,11 +41,14 @@ const NewCard = ({
   const EditNote = async () => {
     try {
       const noteId = data._id;
-      const response = await axiosInstance.put(`/edit-note/${noteId}`, {
-        title: title,
-        content: content,
-        tags: tags,
-      });
+      const response = await axiosInstance.put(
+        `https://notes-app-back-end-mu.vercel.app/edit-note/${noteId}`,
+        {
+          title: title,
+          content: content,
+          tags: tags,
+        }
+      );
       if (!response.data.error) {
         // console.log(response);
         showToastMessage("Note Updated Successfully");

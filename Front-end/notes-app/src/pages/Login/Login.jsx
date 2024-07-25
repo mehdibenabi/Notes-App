@@ -24,7 +24,7 @@ const Login = () => {
         setError(response.data.message);
       } else if (response.data && response.data.accessToken) {
         localStorage.setItem("token", response.data.accessToken);
-        navigate("/");
+        navigate("/Home");
       }
     } catch (error) {
       if (

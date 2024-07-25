@@ -1,51 +1,41 @@
 require("dotenv").config();
-
-const config = require("./config.json");
-const mongoose = require("mongoose");
-const authRoute = require("../Back-end/Routes/authRoute");
-const notesRoute = require("../Back-end/Routes/notesRoute");
-
-mongoose.connect(config.connectionString).then(console.log("connected to db")).catch((err)=>{console.log(err)});
-
-
-
 const express = require("express");
+const mongoose = require("mongoose");
 const cors = require("cors");
+
+const authRoute = require("./Routes/authRoute");
+const notesRoute = require("./Routes/notesRoute");
+
 const app = express();
-const port = 8000;
-const MONGO_URI = process.env.MONGO_URI;
 
-
-
-// middleware
+// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({origin:"*",}));
+app.use(cors({ origin: "*" }));
 
+// Routes
+app.use("/", authRoute);
+app.use("/", notesRoute);
 
-//Routes
+const connectToDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI, {
+      serverSelectionTimeoutMS: 30000,
+      socketTimeoutMS: 45000,
+    });
+    console.log("Connected to DB");
+  } catch (err) {
+    console.error("Error connecting to DB:", err.message);
+    console.error("Error stack:", err.stack);
+  }
+};
 
-app.use("/",authRoute);
-app.use("/",notesRoute);
+connectToDB();
 
-
-
-
-app.get("/",(req,res) => {
-    res.json({data : "hello"});
+app.get("/", (req, res) => {
+  res.json({ message: "Hello" });
 });
 
-
-
-// mongoose.connect(`${MONGO_URI}`).then(() => {
-//   console.log("Connected to MongoDB");
-//   app.listen(port, () => {
-//     console.log(`Server is running on port ${port}`);
-//   });
-// });
-
-
-app.listen(8000, () => {
-  console.log("server is listning in port 8000");
+app.listen(process.env.PORT, () => {
+  console.log(`Server is running on port ${process.env.PORT}`);
 });
-module.exports= app;
